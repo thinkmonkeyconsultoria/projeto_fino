@@ -37,16 +37,28 @@ if selecionar_ativo == "Fundos":
 else:
   coluna_de_data = "Data"
 
-today = datetime.now()
-last_week = today - timedelta(days=7)
+seletor_1,seletor_2 = st.columns(2)
 
-data_seletor = st.date_input(
-      "Selecione a data",
-      (last_week, today),
-      format="DD/MM/YYYY",
-  )
+with seletor_1:
+
+  today = datetime.now()
+  last_week = today - timedelta(days=7)
+
+  data_seletor = st.date_input(
+        "Selecione a data",
+        (last_week, today),
+        format="DD/MM/YYYY",
+    )
 
 start_date, end_date = data_seletor
 filtered_df = base_selecionada[(base_selecionada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_selecionada[coluna_de_data] <= pd.Timestamp(end_date))]
+
+with seletor_2:
+
+  carteiras = sorted(filtered_df["Carteira"].unique())
+
+  selecionar_carteira = st.selectbox("Selecione a carteira",carteiras)
+  filtered_df = filtered_df.loc[filtered_df["Carteira"] == selecionar_carteira]
+
 
 st.dataframe(filtered_df,hide_index=True,use_container_width=True)
