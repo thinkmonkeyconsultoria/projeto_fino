@@ -28,6 +28,7 @@ selecionar_ativo = st.pills(
     "Selecione o Ativo",
     options=["Fundos","Ações","Renda Fixa"],
     selection_mode="single",
+    default="Fundos"
 )
 
 base_selecionada = bases[selecionar_ativo]
