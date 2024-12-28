@@ -32,7 +32,7 @@ selecionar_ativo = st.pills(
 
 base_selecionada = bases[selecionar_ativo]
 
-if base_selecionada == "Fundos":
+if selecionar_ativo == "Fundos":
   coluna_de_data = "Data Operação"
 else:
   coluna_de_data = "Data"
