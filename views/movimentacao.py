@@ -11,7 +11,7 @@ with header_1:
   st.image("Imagens/logo.png")
 
 with header_2:
-  st.title("Projeto Fino - Controle de Movimentação")
+  st.title("Controle de Movimentação")
 
 @st.cache_data
 def carregar_dados():
