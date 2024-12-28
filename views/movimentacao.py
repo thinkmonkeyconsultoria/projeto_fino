@@ -11,6 +11,8 @@ fundos_df = pd.read_excel(file_path, sheet_name="Fundos")
 acoes_df = pd.read_excel(file_path, sheet_name="Ações")
 renda_fixa_df = pd.read_excel(file_path, sheet_name="Renda Fixa")
 
-st.dataframe(fundos_df)
-st.dataframe(acoes_df)
-st.dataframe(renda_fixa_df)
+selecionar_ativo = st.pills(
+    "Selecione o Ativo",
+    options=["Fundos","Ações","Renda Fixa"],
+    selection_mode="single",
+)
