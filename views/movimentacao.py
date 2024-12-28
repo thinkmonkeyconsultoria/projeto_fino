@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", layout="wide")
 
-st.title("Controle de Movimentação")
+st.title("Projeto Fino - Controle de Movimentação")
 
 @st.cache_data
 def carregar_dados():
