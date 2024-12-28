@@ -32,7 +32,7 @@ selecionar_ativo = st.pills(
 
 base_selecionada = bases[selecionar_ativo]
 
-today = datetime.datetime.now()
+today = datetime.now()
 last_week = today - timedelta(days=7)
 
 data_seletor = st.date_input(
