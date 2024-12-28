@@ -5,6 +5,7 @@ page_1 = st.Page(
     "views/page_1.py",
     title="Página 1",
     icon=":material/savings:",
+    default=True
 )
 
 page_2 = st.Page(
@@ -19,7 +20,7 @@ page_2 = st.Page(
 # --- NAVIGATION SETUP [WITH SECTIONS]---
 pg = st.navigation(
     {
-        "Páginas": [page_1]
+        "Páginas": [page_1,page_2]
     }
 )
 
