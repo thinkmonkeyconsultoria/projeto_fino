@@ -31,4 +31,4 @@ selecionar_ativo = st.pills(
 
 base_selecionada = bases[selecionar_ativo]
 
-st.dataframe(base_selecionada)
+st.dataframe(base_selecionada,hide_index=True,use_container_width=True)
