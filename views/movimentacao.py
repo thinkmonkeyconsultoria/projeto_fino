@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from datetime import datetime, timedelta
 
 st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", layout="wide")
 
@@ -31,4 +32,16 @@ selecionar_ativo = st.pills(
 
 base_selecionada = bases[selecionar_ativo]
 
-st.dataframe(base_selecionada,hide_index=True,use_container_width=True)
+today = datetime.datetime.now()
+last_week = today - timedelta(days=7)
+
+data_seletor = st.date_input(
+      "Selecione a data",
+      (last_week, today),
+      format="DD/MM/YYYY",
+  )
+
+start_date, end_date = data_seletor
+filtered_df = base_selecionada[(base_selecionada["Data"] >= pd.Timestamp(start_date)) & (base_selecionada["Data"] <= pd.Timestamp(end_date))]
+
+st.dataframe(filtered_df,hide_index=True,use_container_width=True)
