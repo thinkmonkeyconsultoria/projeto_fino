@@ -32,6 +32,11 @@ selecionar_ativo = st.pills(
 
 base_selecionada = bases[selecionar_ativo]
 
+if base_selecionada == "Fundos":
+  coluna_de_data = "Data Operação"
+else:
+  coluna_de_data = "Data"
+
 today = datetime.now()
 last_week = today - timedelta(days=7)
 
@@ -42,6 +47,6 @@ data_seletor = st.date_input(
   )
 
 start_date, end_date = data_seletor
-filtered_df = base_selecionada[(base_selecionada["Data"] >= pd.Timestamp(start_date)) & (base_selecionada["Data"] <= pd.Timestamp(end_date))]
+filtered_df = base_selecionada[(base_selecionada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_selecionada[coluna_de_data] <= pd.Timestamp(end_date))]
 
 st.dataframe(filtered_df,hide_index=True,use_container_width=True)
