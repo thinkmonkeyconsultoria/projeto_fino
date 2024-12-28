@@ -49,9 +49,13 @@ with seletor_1:
         (last_week, today),
         format="DD/MM/YYYY",
     )
-  st.write(data_seletor)
 
-start_date, end_date = data_seletor
+if data_seletor[1]:
+  start_date, end_date = data_seletor
+else:
+  start_date = data_seletor[0]
+  end_date = start_date
+  
 filtered_df = base_selecionada[(base_selecionada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_selecionada[coluna_de_data] <= pd.Timestamp(end_date))]
 
 with seletor_2:
