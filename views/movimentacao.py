@@ -42,11 +42,11 @@ seletor_1,seletor_2 = st.columns(2)
 with seletor_1:
 
   today = datetime.now()
-  last_week = today - timedelta(days=7)
+  last_month = today - timedelta(days=30)
 
   data_seletor = st.date_input(
         "Selecione a data",
-        (last_week, today),
+        (last_month, today),
         format="DD/MM/YYYY",
     )
 
