@@ -1,17 +1,11 @@
 import streamlit as st
 
 # --- PAGE SETUP ---
-page_1 = st.Page(
-    "views/page_1.py",
-    title="Página 1",
+movimentacao_page = st.Page(
+    "views/movimentacao.py",
+    title="Controle de Movimentação",
     icon=":material/savings:",
     default=True
-)
-
-page_2 = st.Page(
-    "views/page_2.py",
-    title="Página 2",
-    icon=":material/settings:",
 )
 
 # --- NAVIGATION SETUP [WITHOUT SECTIONS] ---
@@ -20,7 +14,7 @@ page_2 = st.Page(
 # --- NAVIGATION SETUP [WITH SECTIONS]---
 pg = st.navigation(
     {
-        "Páginas": [page_1,page_2]
+        "Páginas": [movimentacao_page]
     }
 )
 
