@@ -50,6 +50,8 @@ data_seletor = st.date_input(
       format="DD/MM/YYYY",
   )
 
+st.write(data_seletor)
+
 if len(data_seletor) == 2:
   start_date, end_date = data_seletor
 else:
