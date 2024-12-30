@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 from datetime import datetime, timedelta
 
 # Streamlit Page Config
@@ -32,8 +33,7 @@ bases_df = carregar_bases()
 base_selecionado_df = bases_df[seletor_de_abas]
 
 carteiras_unicas = base_selecionado_df["Carteira"].unique()
-carteiras_unicas = carteiras_unicas.tolist()
-carteiras_unicas = carteiras_unicas.insert("Mostrar Todas",0)
+carteiras_unicas = np.insert(carteiras_unicas, 0, "Mostrar todas")
 
 selecionar_carteira = st.selectbox("Selecione a carteira",carteiras_unicas)
 
