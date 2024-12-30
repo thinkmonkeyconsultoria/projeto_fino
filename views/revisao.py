@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 # Streamlit Page Config
 st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", layout="wide")
 
-header_1, header_2 = st.columns(2)
+header_1, header_2 = st.columns([1,3])
 with header_1:
 
   st.image("Imagens/logo.png")
