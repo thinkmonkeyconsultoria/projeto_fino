@@ -6,7 +6,14 @@ from datetime import datetime, timedelta
 # Streamlit Page Config
 st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", layout="wide")
 
-st.image("Imagens/logo.png")
+header_1, header_2 = st.columns(2)
+with header_1:
+
+  st.image("Imagens/logo.png")
+
+with header_2:
+
+  st.title("algum título!!")
 
 @st.cache_data
 def carregar_bases():
@@ -26,7 +33,7 @@ def carregar_bases():
 
   return bases_dict
 
-st.title("algum título!!")
+
 bases_df = carregar_bases()
 
 colunas_1,colunas_2,coluna_3 = st.columns(3)
