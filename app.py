@@ -8,13 +8,19 @@ movimentacao_page = st.Page(
     default=True
 )
 
+revisao_page = st.Page(
+    "views/revisao.py",
+    title="Controle de Movimentação",
+    icon=":material/savings:",
+)
+
 # --- NAVIGATION SETUP [WITHOUT SECTIONS] ---
 # pg = st.navigation(pages=[about_page, project_1_page, project_2_page])
 
 # --- NAVIGATION SETUP [WITH SECTIONS]---
 pg = st.navigation(
     {
-        "Páginas": [movimentacao_page]
+        "Páginas": [movimentacao_page,revisao_page]
     }
 )
 
