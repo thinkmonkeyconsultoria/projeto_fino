@@ -46,4 +46,14 @@ data_seletor = st.date_input(
       format="DD/MM/YYYY",
   )
 
+if len(data_seletor) == 2:
+  start_date, end_date = data_seletor
+else:
+  start_date = data_seletor[0]
+  enddate = start_date
+
+base_filtrada = base_filtrada.loc[(base_filtrada["Data Operação"] >= pd.Timestamp(start_date)) & (base_filtrada["Data Operação"] <= pd.Timestamp(end_date))]
+
+
+
 st.dataframe(base_filtrada,hide_index=True,use_container_width=True)
