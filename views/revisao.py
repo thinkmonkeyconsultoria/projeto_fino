@@ -37,7 +37,10 @@ carteiras_unicas = np.insert(carteiras_unicas, 0, "Mostrar todas")
 
 selecionar_carteira = st.selectbox("Selecione a carteira",carteiras_unicas)
 
-base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"] == selecionar_carteira]
+if carteiras_unicas == "Mostrar todas":
+  base_filtrada = base_selecionado_df
+else:
+  base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"] == selecionar_carteira]
 
 today = datetime.now()
 la_atras = today - timedelta(days=1800)
