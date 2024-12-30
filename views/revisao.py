@@ -52,7 +52,12 @@ else:
   start_date = data_seletor[0]
   end_date = start_date
 
-base_filtrada = base_filtrada.loc[(base_filtrada["Data Operação"] >= pd.Timestamp(start_date)) & (base_filtrada["Data Operação"] <= pd.Timestamp(end_date))]
+if seletor_de_abas == "Fundos":
+  coluna_de_data = "Data Operação"
+else:
+  coluna_de_data = "Data"
+
+base_filtrada = base_filtrada.loc[(base_filtrada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_filtrada[coluna_de_data] <= pd.Timestamp(end_date))]
 
 
 
