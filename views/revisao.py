@@ -38,7 +38,7 @@ selecionar_carteira = st.multiselect("Selecione a carteira",carteiras_unicas)
 
 st.write(selecionar_carteira)
 
-if selecionar_carteira == None:
+if len(selecionar_carteira) == 0:
   base_filtrada = base_selecionado_df
 else:
   base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"].isin(selecionar_carteira)]
