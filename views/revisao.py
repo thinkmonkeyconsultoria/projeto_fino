@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 # Streamlit Page Config
 st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", layout="wide")
 
-seletor_de_abas = st.pills("Selecione o Ativo",options=["Fundos","Ações","Renda Fixa"],selection_mode="single",default="Fundos")
+
 
 @st.cache_data
 def carregar_bases():
@@ -27,30 +27,36 @@ def carregar_bases():
   return bases_dict
 
 st.title("algum título!!")
-
 bases_df = carregar_bases()
 
-base_selecionado_df = bases_df[seletor_de_abas]
+colunas_1,colunas_2,coluna_3 = st.columns(3)
 
-carteiras_unicas = base_selecionado_df["Carteira"].unique()
+with colunas_1:
 
-selecionar_carteira = st.multiselect("Selecione a carteira",carteiras_unicas)
+  seletor_de_abas = st.pills("Selecione o Ativo",options=["Fundos","Ações","Renda Fixa"],selection_mode="single",default="Fundos")
+
+with colunas_2:
+
+  base_selecionado_df = bases_df[seletor_de_abas]
+  carteiras_unicas = base_selecionado_df["Carteira"].unique()
+  selecionar_carteira = st.multiselect("Selecione a carteira",carteiras_unicas)
+
+with coluna_3:
+  
+  today = datetime.now()
+  la_atras = today - timedelta(days=1800)
+
+  data_seletor = st.date_input(
+        "Selecione a data",
+        (la_atras, today),
+        format="DD/MM/YYYY",
+    )
+  
 
 if len(selecionar_carteira) == 0:
   base_filtrada = base_selecionado_df
 else:
   base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"].isin(selecionar_carteira)]
-
-today = datetime.now()
-la_atras = today - timedelta(days=1800)
-
-data_seletor = st.date_input(
-      "Selecione a data",
-      (la_atras, today),
-      format="DD/MM/YYYY",
-  )
-
-st.write(data_seletor)
 
 if len(data_seletor) == 0:
   pass
