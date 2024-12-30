@@ -6,7 +6,7 @@ st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", la
 
 seletor_de_abas = st.pills("Selecione o Ativo",options=["Fundos","Ações","Renda Fixa"],selection_mode="single",default="Fundos")
 
-@st.cache_data()
+@st.cache_data
 def carregar_bases():
 
   # Carregar excel
@@ -30,5 +30,6 @@ bases_df = carregar_bases()
 
 base_selecionado_df = bases_df[seletor_de_abas]
 
-st.dataframe(base_selecionado_df,hide_index=True,use_container_width=True)
+base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"] == "absol"]
 
+st.dataframe(base_filtrada,hide_index=True,use_container_width=True)
