@@ -58,7 +58,7 @@ with coluna_3:
         (la_atras, today),
         format="DD/MM/YYYY",
     )
-  
+
 
 if len(selecionar_carteira) == 0:
   base_filtrada = base_selecionado_df
@@ -80,5 +80,9 @@ else:
     coluna_de_data = "Data"
 
   base_filtrada = base_filtrada.loc[(base_filtrada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_filtrada[coluna_de_data] <= pd.Timestamp(end_date))]
+
+
+total_financeiro = base_filtrada["Financeiro"].sum()
+st.metric(label="Total Financeiro", value=f"R$ {total_financeiro}")
 
 st.dataframe(base_filtrada,hide_index=True,use_container_width=True)
