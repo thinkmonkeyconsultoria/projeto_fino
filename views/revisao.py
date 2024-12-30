@@ -32,6 +32,8 @@ bases_df = carregar_bases()
 base_selecionado_df = bases_df[seletor_de_abas]
 
 carteiras_unicas = base_selecionado_df["Carteira"].unique()
+carteiras_unicas = carteiras_unicas.tolist()
+carteiras_unicas = carteiras_unicas.insert(0,"Mostrar Todas")
 
 selecionar_carteira = st.selectbox("Selecione a carteira",carteiras_unicas)
 
