@@ -6,17 +6,29 @@ st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", la
 
 seletor_de_abas = st.pills("Selecione o Ativo",options=["Fundos","Ações","Renda Fixa"],selection_mode="single",default="Fundos")
 
-# Carregar excel
-file_path = "bases/Planilha de Movimentação.xlsx"
-fundos_df = pd.read_excel(file_path, sheet_name=seletor_de_abas)
+@st.cache_data()
+def carregar_bases():
 
-# Pills
+  # Carregar excel
+  file_path = "bases/Planilha de Movimentação.xlsx"
 
-st.dataframe(fundos_df,hide_index=True,use_container_width=True)
+  fundos_df = pd.read_excel(file_path, sheet_name="Fundos")
+  acoes_df = pd.read_excel(file_path, sheet_name="Ações")
+  renda_fixa_df = pd.read_excel(file_path, sheet_name="Renda Fixa")
 
-# Cache Decorator
-# @st.cache_data
+  bases_dict = {
+      "Fundos":fundos_df,
+      "Ações": acoes_df,
+      "Renda Fixa":renda_fixa_df
+  }
 
-# Mostrar dataframe
+  return bases_dict
 
+st.title("algum título!!")
+
+bases_df = carregar_bases()
+
+base_selecionado_df = bases_df[seletor_de_abas]
+
+st.dataframe(base_selecionado_df,hide_index=True,use_container_width=True)
 
