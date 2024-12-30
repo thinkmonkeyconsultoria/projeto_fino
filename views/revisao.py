@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 # Streamlit Page Config
 st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", layout="wide")
 
-
+st.image("Imagens/logo.png")
 
 @st.cache_data
 def carregar_bases():
@@ -42,7 +42,7 @@ with colunas_2:
   selecionar_carteira = st.multiselect("Selecione a carteira",carteiras_unicas)
 
 with coluna_3:
-  
+
   today = datetime.now()
   la_atras = today - timedelta(days=1800)
 
