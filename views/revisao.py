@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from datetime import datetime, timedelta
 
 # Streamlit Page Config
 st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", layout="wide")
@@ -35,5 +36,14 @@ carteiras_unicas = base_selecionado_df["Carteira"].unique()
 selecionar_carteira = st.selectbox("Selecione a carteira",carteiras_unicas)
 
 base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"] == selecionar_carteira]
+
+today = datetime.now()
+la_atras = today - timedelta(days=1800)
+
+data_seletor = st.date_input(
+      "Selecione a data",
+      (la_atras, today),
+      format="DD/MM/YYYY",
+  )
 
 st.dataframe(base_filtrada,hide_index=True,use_container_width=True)
