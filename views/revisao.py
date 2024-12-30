@@ -52,19 +52,20 @@ data_seletor = st.date_input(
 
 st.write(data_seletor)
 
-if len(data_seletor) == 2:
-  start_date, end_date = data_seletor
+if len(data_seletor) == 0:
+  pass
 else:
-  start_date = data_seletor[0]
-  end_date = start_date
+  if len(data_seletor) == 2:
+    start_date, end_date = data_seletor
+  else:
+    start_date = data_seletor[0]
+    end_date = start_date
 
-if seletor_de_abas == "Fundos":
-  coluna_de_data = "Data Operação"
-else:
-  coluna_de_data = "Data"
+  if seletor_de_abas == "Fundos":
+    coluna_de_data = "Data Operação"
+  else:
+    coluna_de_data = "Data"
 
-base_filtrada = base_filtrada.loc[(base_filtrada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_filtrada[coluna_de_data] <= pd.Timestamp(end_date))]
-
-
+  base_filtrada = base_filtrada.loc[(base_filtrada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_filtrada[coluna_de_data] <= pd.Timestamp(end_date))]
 
 st.dataframe(base_filtrada,hide_index=True,use_container_width=True)
