@@ -50,7 +50,7 @@ if len(data_seletor) == 2:
   start_date, end_date = data_seletor
 else:
   start_date = data_seletor[0]
-  enddate = start_date
+  end_date = start_date
 
 base_filtrada = base_filtrada.loc[(base_filtrada["Data Operação"] >= pd.Timestamp(start_date)) & (base_filtrada["Data Operação"] <= pd.Timestamp(end_date))]
 
