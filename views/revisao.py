@@ -36,8 +36,6 @@ carteiras_unicas = base_selecionado_df["Carteira"].unique()
 
 selecionar_carteira = st.multiselect("Selecione a carteira",carteiras_unicas)
 
-st.write(selecionar_carteira)
-
 if len(selecionar_carteira) == 0:
   base_filtrada = base_selecionado_df
 else:
