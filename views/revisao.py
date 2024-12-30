@@ -36,7 +36,10 @@ carteiras_unicas = base_selecionado_df["Carteira"].unique()
 
 selecionar_carteira = st.multiselect("Selecione a carteira",carteiras_unicas)
 
-base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"].isin(selecionar_carteira)]
+if selecionar_carteira == None:
+  base_filtrada = base_selecionado_df
+else:
+  base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"].isin(selecionar_carteira)]
 
 today = datetime.now()
 la_atras = today - timedelta(days=1800)
