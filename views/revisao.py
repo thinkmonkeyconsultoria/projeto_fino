@@ -32,6 +32,6 @@ base_selecionado_df = bases_df[seletor_de_abas]
 
 selecionar_carteira = st.selectbox("Selecione a carteira",["absol","bastiodon","joltik"])
 
-base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"] == "absol"]
+base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"] == selecionar_carteira]
 
 st.dataframe(base_filtrada,hide_index=True,use_container_width=True)
