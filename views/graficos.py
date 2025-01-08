@@ -11,7 +11,7 @@ st.set_page_config(page_title="Exemplo de Gráficos", page_icon="💰", layout="
 def carregar_csv():
 
   # Carregar excel
-  file_path = "/content/projeto_fino/bases/inf_diario_fi_202501.csv"
+  file_path = "bases/inf_diario_fi_202501.csv"
 
   base = pd.read_csv(file_path,delimiter=";")
 
