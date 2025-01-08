@@ -58,37 +58,23 @@ with graph_2:
     default=df['nome_do_fundo'].unique()[:5]
   )
 
-  # Filter DataFrame based on selection
-  filtered_df = df[df['nome_do_fundo'].isin(selected_funds)]
+filtered_df = df[df['nome_do_fundo'].isin(selected_funds)]
 
-  # Prepare data for candlestick graph
-  if not filtered_df.empty:
-      fig = go.Figure()
+if not filtered_df.empty:
+    # Group by 'nome_do_fundo' and sum 'VL_QUOTA'
+    grouped_df = filtered_df.groupby('nome_do_fundo', as_index=False)['VL_QUOTA'].sum()
 
-      for fund in selected_funds:
-          fund_data = filtered_df[filtered_df['nome_do_fundo'] == fund]
+    # Create a bar graph using Plotly Express
+    fig = px.bar(
+        grouped_df,
+        x='nome_do_fundo',
+        y='VL_QUOTA',
+        title="Total VL_QUOTA by Fund",
+        labels={"nome_do_fundo": "Fund Name", "VL_QUOTA": "Total Quota Value"}
+    )
 
-          # Create candlestick for each fund
-          fig.add_trace(
-              go.Candlestick(
-                  x=fund_data['DT_COMPTC'],
-                  open=fund_data['VL_QUOTA'],  # Example: Use VL_QUOTA for all candlestick properties
-                  high=fund_data['VL_QUOTA'] + 0.5,  # Mock high value
-                  low=fund_data['VL_QUOTA'] - 0.5,  # Mock low value
-                  close=fund_data['VL_QUOTA'],  # Example close value
-                  name=fund
-              )
-          )
+    # Display the bar graph
+    st.plotly_chart(fig)
 
-      # Update layout
-      fig.update_layout(
-          title="Candlestick Graph by Fund",
-          xaxis_title="Date",
-          yaxis_title="Quota Value",
-          xaxis_rangeslider_visible=False
-      )
-
-      # Display the chart
-      st.plotly_chart(fig)
-  else:
-      st.warning("No data available for the selected funds.")
+else:
+  st.warning("No data available for the selected funds.")
