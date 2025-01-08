@@ -48,26 +48,13 @@ with graph_1:
   # Display the chart in Streamlit
   st.plotly_chart(fig)
 
-with graph_1:
-
-  # Plotly Express Line Chart
-  fig = px.line(
-      grouped_df,
-      x="DT_COMPTC",
-      y="VL_QUOTA",
-      title="VL_QUOTA por Data",
-      labels={"DT_COMPTC": "Data", "VL_QUOTA": "Quota"}
-  )
-
-  # Display the chart in Streamlit
-  st.plotly_chart(fig)
-
 with graph_2:
+
   selected_funds = st.multiselect(
     "Select Funds",
     options=df['nome_do_fundo'].unique(),
     default=df['nome_do_fundo'].unique()
-)
+  )
 
   # Filter DataFrame based on selection
   filtered_df = df[df['nome_do_fundo'].isin(selected_funds)]
