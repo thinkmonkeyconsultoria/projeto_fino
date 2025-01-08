@@ -76,7 +76,7 @@ with seletor_3:
   selecionar_carteira = st.selectbox("Selecione a carteira",carteiras)
   filtered_df = filtered_df.loc[filtered_df["Carteira"] == selecionar_carteira]
 
-total_financeiro = base_filtrada["Financeiro"].sum()
+total_financeiro = filtered_df["Financeiro"].sum()
 st.metric(label="Total Financeiro", value=f"R$ {total_financeiro}")
 
 st.dataframe(filtered_df,hide_index=True,use_container_width=True,
