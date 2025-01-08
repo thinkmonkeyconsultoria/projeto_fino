@@ -77,4 +77,10 @@ with seletor_3:
   filtered_df = filtered_df.loc[filtered_df["Carteira"] == selecionar_carteira]
 
 
-st.dataframe(filtered_df,hide_index=True,use_container_width=True)
+st.dataframe(filtered_df,hide_index=True,use_container_width=True,
+    column_config={
+        "Financeiro": st.column_config.NumberColumn(
+            "Financeiro (R$)"
+            format="R$%d",
+        )
+    })
