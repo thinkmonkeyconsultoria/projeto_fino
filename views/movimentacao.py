@@ -80,7 +80,7 @@ with seletor_3:
 st.dataframe(filtered_df,hide_index=True,use_container_width=True,
     column_config={
         "Financeiro": st.column_config.NumberColumn(
-            "Financeiro (R$)"
+            "Financeiro (R$)",
             format="R$%d",
         )
     })
