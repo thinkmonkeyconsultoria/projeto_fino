@@ -5,13 +5,13 @@ movimentacao_page = st.Page(
     "views/movimentacao.py",
     title="Controle de Movimentação",
     icon=":material/savings:",
+    default=True
 )
 
 revisao_page = st.Page(
     "views/revisao.py",
     title="Controle de Movimentação",
     icon=":material/savings:",
-    default=True
 )
 
 # --- NAVIGATION SETUP [WITHOUT SECTIONS] ---

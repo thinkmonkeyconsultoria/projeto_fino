@@ -31,13 +31,15 @@ def carregar_dados():
   return dados_dic
 
 bases = carregar_dados()
+seletor_1,seletor_2,seletor_3 = st.columns(3)
 
-selecionar_ativo = st.pills(
-    "Selecione o Ativo",
-    options=["Fundos","Ações","Renda Fixa"],
-    selection_mode="single",
-    default="Fundos"
-)
+with seletor_1:
+  selecionar_ativo = st.pills(
+      "Selecione o Ativo",
+      options=["Fundos","Ações","Renda Fixa"],
+      selection_mode="single",
+      default="Fundos"
+  )
 
 base_selecionada = bases[selecionar_ativo]
 
@@ -46,9 +48,9 @@ if selecionar_ativo == "Fundos":
 else:
   coluna_de_data = "Data"
 
-seletor_1,seletor_2 = st.columns(2)
 
-with seletor_1:
+
+with seletor_2:
 
   today = datetime.now()
   last_month = today - timedelta(days=30)
@@ -67,7 +69,7 @@ else:
 
 filtered_df = base_selecionada.loc[(base_selecionada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_selecionada[coluna_de_data] <= pd.Timestamp(end_date))]
 
-with seletor_2:
+with seletor_3:
 
   carteiras = sorted(filtered_df["Carteira"].unique())
 
