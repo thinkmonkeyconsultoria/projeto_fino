@@ -2,87 +2,56 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+import plotly.express as px
 
 # Streamlit Page Config
-st.set_page_config(page_title="Controle de Movimentação", page_icon="💰", layout="wide")
-
-header_1, header_2 = st.columns([1,3])
-with header_1:
-
-  st.image("Imagens/logo.png")
-
-with header_2:
-
-  st.title("Controle de Movimentação")
+st.set_page_config(page_title="Exemplo de Gráficos", page_icon="💰", layout="wide")
 
 @st.cache_data
-def carregar_bases():
+def carregar_csv():
 
   # Carregar excel
-  file_path = "bases/Planilha de Movimentação.xlsx"
+  file_path = "/content/projeto_fino/bases/inf_diario_fi_202501.csv"
 
-  fundos_df = pd.read_excel(file_path, sheet_name="Fundos")
-  acoes_df = pd.read_excel(file_path, sheet_name="Ações")
-  renda_fixa_df = pd.read_excel(file_path, sheet_name="Renda Fixa")
+  base = pd.read_csv(file_path,delimiter=";")
 
-  bases_dict = {
-      "Fundos":fundos_df,
-      "Ações": acoes_df,
-      "Renda Fixa":renda_fixa_df
-  }
+  return base
 
-  return bases_dict
+df = carregar_csv()
 
+# Filters
+st.sidebar.header("Filters")
+selected_funds = st.sidebar.multiselect("Select Fund Classes", df['TP_FUNDO_CLASSE'].unique(), default=df['TP_FUNDO_CLASSE'].unique())
+date_range = st.sidebar.date_input("Select Date Range", [df['DT_COMPTC'].min(), df['DT_COMPTC'].max()])
 
-bases_df = carregar_bases()
+# Apply Filters
+filtered_df = df[(df['TP_FUNDO_CLASSE'].isin(selected_funds)) & 
+                 (df['DT_COMPTC'] >= pd.to_datetime(date_range[0])) &
+                 (df['DT_COMPTC'] <= pd.to_datetime(date_range[1]))]
 
-colunas_1,colunas_2,coluna_3 = st.columns(3)
+# Summary Metrics
+st.header("Summary Metrics")
+st.metric("Total Patrimony", f"R$ {filtered_df['VL_PATRIM_LIQ'].sum():,.2f}")
+st.metric("Total Capture", f"R$ {filtered_df['CAPTC_DIA'].sum():,.2f}")
+st.metric("Total Redemption", f"R$ {filtered_df['RESG_DIA'].sum():,.2f}")
 
-with colunas_1:
+# Plot 1: Patrimony Over Time
+st.header("Patrimony Over Time")
+fig1 = px.line(filtered_df, x="DT_COMPTC", y="VL_PATRIM_LIQ", color="TP_FUNDO_CLASSE", title="Patrimony Over Time")
+st.plotly_chart(fig1)
 
-  seletor_de_abas = st.pills("Selecione o Ativo",options=["Fundos","Ações","Renda Fixa"],selection_mode="single",default="Fundos")
+# Plot 2: Daily Capture vs Redemption
+st.header("Daily Capture vs Redemption")
+fig2 = px.bar(filtered_df, x="DT_COMPTC", y=["CAPTC_DIA", "RESG_DIA"], 
+              color_discrete_map={"CAPTC_DIA": "green", "RESG_DIA": "red"},
+              barmode="group", title="Daily Capture vs Redemption")
+st.plotly_chart(fig2)
 
-with colunas_2:
+# Plot 3: Total Quota by Fund Class
+st.header("Total Quota by Fund Class")
+fig3 = px.pie(filtered_df, values="VL_TOTAL", names="TP_FUNDO_CLASSE", title="Total Quota by Fund Class")
+st.plotly_chart(fig3)
 
-  base_selecionado_df = bases_df[seletor_de_abas]
-  carteiras_unicas = base_selecionado_df["Carteira"].unique()
-  selecionar_carteira = st.multiselect("Selecione a carteira",carteiras_unicas)
-
-with coluna_3:
-
-  today = datetime.now()
-  la_atras = today - timedelta(days=1800)
-
-  data_seletor = st.date_input(
-        "Selecione a data",
-        (la_atras, today),
-        format="DD/MM/YYYY",
-    )
-
-
-if len(selecionar_carteira) == 0:
-  base_filtrada = base_selecionado_df
-else:
-  base_filtrada = base_selecionado_df.loc[base_selecionado_df["Carteira"].isin(selecionar_carteira)]
-
-if len(data_seletor) == 0:
-  pass
-else:
-  if len(data_seletor) == 2:
-    start_date, end_date = data_seletor
-  else:
-    start_date = data_seletor[0]
-    end_date = start_date
-
-  if seletor_de_abas == "Fundos":
-    coluna_de_data = "Data Operação"
-  else:
-    coluna_de_data = "Data"
-
-  base_filtrada = base_filtrada.loc[(base_filtrada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_filtrada[coluna_de_data] <= pd.Timestamp(end_date))]
-
-
-total_financeiro = base_filtrada["Financeiro"].sum()
-st.metric(label="Total Financeiro", value=f"R$ {total_financeiro}")
-
-st.dataframe(base_filtrada,hide_index=True,use_container_width=True)
+# Display Filtered DataFrame
+st.header("Filtered Data")
+st.dataframe(filtered_df, hide_index=True)
