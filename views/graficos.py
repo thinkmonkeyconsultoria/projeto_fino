@@ -70,7 +70,8 @@ with graph_2:
           x='nome_do_fundo',
           y='VL_QUOTA',
           title="Total VL_QUOTA por fundo",
-          labels={"nome_do_fundo": "Nome Fundo", "VL_QUOTA": "Total Quota"}
+          labels={"nome_do_fundo": "Nome Fundo", "VL_QUOTA": "Total Quota"},
+          height=600
       )
 
       # Display the bar graph
