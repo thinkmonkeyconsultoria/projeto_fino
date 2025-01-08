@@ -48,8 +48,6 @@ if selecionar_ativo == "Fundos":
 else:
   coluna_de_data = "Data"
 
-
-
 with seletor_2:
 
   today = datetime.now()
@@ -60,14 +58,16 @@ with seletor_2:
         (last_month, today),
         format="DD/MM/YYYY",
     )
-
-if len(data_seletor) > 1:
-  start_date, end_date = data_seletor
+if len(data_seletor) == 0:
+  filtered_df = base_selecionada
 else:
-  start_date = data_seletor[0]
-  end_date = start_date
+  if len(data_seletor) > 1:
+    start_date, end_date = data_seletor
+  else:
+    start_date = data_seletor[0]
+    end_date = start_date
 
-filtered_df = base_selecionada.loc[(base_selecionada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_selecionada[coluna_de_data] <= pd.Timestamp(end_date))]
+  filtered_df = base_selecionada.loc[(base_selecionada[coluna_de_data] >= pd.Timestamp(start_date)) & (base_selecionada[coluna_de_data] <= pd.Timestamp(end_date))]
 
 with seletor_3:
 
