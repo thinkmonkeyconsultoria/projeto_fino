@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import plotly.express as px
+import plotly.graph_objects as go
 
 # Streamlit Page Config
 st.set_page_config(page_title="Exemplo de Gráficos", page_icon="💰", layout="wide")
@@ -54,7 +55,7 @@ with graph_2:
   selected_funds = st.multiselect(
     "Select Funds",
     options=df['nome_do_fundo'].unique(),
-    default=df['nome_do_fundo'].unique()
+    default=df['nome_do_fundo'].unique()[:5]
   )
 
   # Filter DataFrame based on selection
