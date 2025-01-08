@@ -8,9 +8,9 @@ movimentacao_page = st.Page(
     default=True
 )
 
-revisao_page = st.Page(
-    "views/revisao.py",
-    title="Controle de Movimentação",
+graficos_page = st.Page(
+    "views/graficos.py",
+    title="Gráficos",
     icon=":material/savings:",
 )
 
@@ -20,7 +20,7 @@ revisao_page = st.Page(
 # --- NAVIGATION SETUP [WITH SECTIONS]---
 pg = st.navigation(
     {
-        "Páginas": [movimentacao_page,revisao_page]
+        "Páginas": [movimentacao_page,graficos_page]
     }
 )
 
