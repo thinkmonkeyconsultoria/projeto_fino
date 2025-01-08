@@ -33,4 +33,22 @@ selected_funds = st.selectbox("Selecione o fundo",
 # Aplicar Filtros
 filtered_df = df.loc[(df['nome_do_fundo'] == selected_funds)]
 
-st.dataframe(filtered_df)
+filtered_df = filtered_df.drop_duplicates(subset='DT_COMPTC')
+
+graph_1, graph_2 = st.columns(2)
+
+
+with graph_1:
+  st.title("VL_QUOTA por Data")
+
+  # Plotly Express Line Chart
+  fig = px.line(
+      filtered_df,
+      x="DT_COMPTC",
+      y="VL_QUOTA",
+      title="VL_QUOTA por Data",
+      labels={"DT_COMPTC": "Data", "VL_QUOTA": "Quota"}
+  )
+
+  # Display the chart in Streamlit
+  st.plotly_chart(fig)
