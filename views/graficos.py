@@ -53,7 +53,7 @@ with graph_1:
 with graph_2:
 
   selected_funds = st.multiselect(
-    "Select Funds",
+    "Selecione fundos",
     options=df['nome_do_fundo'].unique(),
     default=df['nome_do_fundo'].unique()[:5]
   )
@@ -69,12 +69,12 @@ if not filtered_df.empty:
         grouped_df,
         x='nome_do_fundo',
         y='VL_QUOTA',
-        title="Total VL_QUOTA by Fund",
-        labels={"nome_do_fundo": "Fund Name", "VL_QUOTA": "Total Quota Value"}
+        title="Total VL_QUOTA por fundo",
+        labels={"nome_do_fundo": "Nome Fundo", "VL_QUOTA": "Total Quota"}
     )
 
     # Display the bar graph
     st.plotly_chart(fig)
 
 else:
-  st.warning("No data available for the selected funds.")
+  st.warning("Selecione um fundo")
