@@ -34,16 +34,18 @@ selected_funds = st.selectbox("Selecione o fundo",
 filtered_df = df.loc[(df['nome_do_fundo'] == selected_funds)]
 
 filtered_df = filtered_df.drop_duplicates(subset='DT_COMPTC')
+# Group by DT_COMPTC and sum VL_QUOTA
+grouped_df = filtered_df.groupby('DT_COMPTC', as_index=False)['VL_QUOTA'].sum()
 
 graph_1, graph_2 = st.columns(2)
 
 
 with graph_1:
-  st.title("VL_QUOTA por Data")
+  st.subheader("VL_QUOTA por Data")
 
   # Plotly Express Line Chart
   fig = px.line(
-      filtered_df,
+      grouped_df,
       x="DT_COMPTC",
       y="VL_QUOTA",
       title="VL_QUOTA por Data",
