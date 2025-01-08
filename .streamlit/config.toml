@@ -1,9 +1,9 @@
 [theme]
-primaryColor = "#FFB703"  
-backgroundColor = "#647795"  
+primaryColor = "#FFB703"
+backgroundColor = "#647795"
 secondaryBackgroundColor = "#4A5A70"
 textColor = "#FFFFFF"
-font = "monospace"
+font = "sans serif"
 
 [runner]
 magicEnabled = false
