@@ -19,39 +19,53 @@ def carregar_csv():
 
 df = carregar_csv()
 
-# Filters
-st.sidebar.header("Filters")
-selected_funds = st.sidebar.multiselect("Select Fund Classes", df['TP_FUNDO_CLASSE'].unique(), default=df['TP_FUNDO_CLASSE'].unique())
-date_range = st.sidebar.date_input("Select Date Range", [df['DT_COMPTC'].min(), df['DT_COMPTC'].max()])
+df['DT_COMPTC'] = pd.to_datetime(df['DT_COMPTC'])  # Converter datas para formato datetime
 
-# Apply Filters
+# Título da Aplicação
+st.title("Dashboard de Fundos de Investimento")
+
+# Filtros na página
+st.subheader("Filtros")
+col1, col2 = st.columns(2)
+
+with col1:
+    selected_funds = st.multiselect("Selecione Classes de Fundos", 
+                                    df['TP_FUNDO_CLASSE'].unique(), 
+                                    default=df['TP_FUNDO_CLASSE'].unique())
+
+with col2:
+    date_range = st.date_input("Selecione o Intervalo de Datas", 
+                               [df['DT_COMPTC'].min(), df['DT_COMPTC'].max()])
+
+# Aplicar Filtros
 filtered_df = df[(df['TP_FUNDO_CLASSE'].isin(selected_funds)) & 
                  (df['DT_COMPTC'] >= pd.to_datetime(date_range[0])) &
                  (df['DT_COMPTC'] <= pd.to_datetime(date_range[1]))]
 
-# Summary Metrics
-st.header("Summary Metrics")
-st.metric("Total Patrimony", f"R$ {filtered_df['VL_PATRIM_LIQ'].sum():,.2f}")
-st.metric("Total Capture", f"R$ {filtered_df['CAPTC_DIA'].sum():,.2f}")
-st.metric("Total Redemption", f"R$ {filtered_df['RESG_DIA'].sum():,.2f}")
+# Métricas Resumidas
+st.header("Métricas Resumidas")
+col1, col2, col3 = st.columns(3)
+col1.metric("Patrimônio Total", f"R$ {filtered_df['VL_PATRIM_LIQ'].sum():,.2f}")
+col2.metric("Captação Total", f"R$ {filtered_df['CAPTC_DIA'].sum():,.2f}")
+col3.metric("Resgate Total", f"R$ {filtered_df['RESG_DIA'].sum():,.2f}")
 
-# Plot 1: Patrimony Over Time
-st.header("Patrimony Over Time")
-fig1 = px.line(filtered_df, x="DT_COMPTC", y="VL_PATRIM_LIQ", color="TP_FUNDO_CLASSE", title="Patrimony Over Time")
+# Gráfico 1: Patrimônio ao longo do tempo
+st.header("Patrimônio ao Longo do Tempo")
+fig1 = px.line(filtered_df, x="DT_COMPTC", y="VL_PATRIM_LIQ", color="TP_FUNDO_CLASSE", title="Patrimônio ao Longo do Tempo")
 st.plotly_chart(fig1)
 
-# Plot 2: Daily Capture vs Redemption
-st.header("Daily Capture vs Redemption")
+# Gráfico 2: Captação vs Resgate Diário
+st.header("Captação vs Resgate Diário")
 fig2 = px.bar(filtered_df, x="DT_COMPTC", y=["CAPTC_DIA", "RESG_DIA"], 
               color_discrete_map={"CAPTC_DIA": "green", "RESG_DIA": "red"},
-              barmode="group", title="Daily Capture vs Redemption")
+              barmode="group", title="Captação vs Resgate Diário")
 st.plotly_chart(fig2)
 
-# Plot 3: Total Quota by Fund Class
-st.header("Total Quota by Fund Class")
-fig3 = px.pie(filtered_df, values="VL_TOTAL", names="TP_FUNDO_CLASSE", title="Total Quota by Fund Class")
+# Gráfico 3: Quota Total por Classe de Fundo
+st.header("Quota Total por Classe de Fundo")
+fig3 = px.pie(filtered_df, values="VL_TOTAL", names="TP_FUNDO_CLASSE", title="Quota Total por Classe de Fundo")
 st.plotly_chart(fig3)
 
-# Display Filtered DataFrame
-st.header("Filtered Data")
+# Exibir DataFrame Filtrado
+st.header("Dados Filtrados")
 st.dataframe(filtered_df, hide_index=True)
