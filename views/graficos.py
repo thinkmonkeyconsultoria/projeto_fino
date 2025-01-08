@@ -13,7 +13,7 @@ def carregar_csv():
   # Carregar excel
   file_path = "bases/fundos_sample.csv"
 
-  base = pd.read_csv(file_path,delimiter=";")
+  base = pd.read_csv(file_path)
 
   return base
 
