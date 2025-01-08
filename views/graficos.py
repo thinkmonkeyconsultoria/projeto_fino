@@ -24,6 +24,8 @@ df['DT_COMPTC'] = pd.to_datetime(df['DT_COMPTC'])  # Converter datas para format
 # Título da Aplicação
 st.title("Dashboard de Fundos de Investimento")
 
+graph_1,graph_2 = st.columns(2)
+
 with graph_1:
   selected_funds = st.selectbox("Selecione o fundo",
                                       df['nome_do_fundo'].unique())
@@ -35,7 +37,6 @@ with graph_1:
   # Group by DT_COMPTC and sum VL_QUOTA
   grouped_df = filtered_df.groupby('DT_COMPTC', as_index=False)['VL_QUOTA'].sum()
 
-  graph_1, graph_2 = st.columns(2)
   # Plotly Express Line Chart
   fig = px.line(
       grouped_df,
