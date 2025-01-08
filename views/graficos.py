@@ -33,7 +33,4 @@ selected_funds = st.selectbox("Selecione o fundo",
 # Aplicar Filtros
 filtered_df = df.loc[(df['nome_do_fundo'] == selected_funds)]
 
-# Gráfico 1: Patrimônio ao longo do tempo
-st.header("Patrimônio ao Longo do Tempo")
-fig1 = px.line(filtered_df, x="DT_COMPTC", y="VL_PATRIM_LIQ", title="Patrimônio ao Longo do Tempo")
-st.plotly_chart(fig1)
+st.dataframe(filtered_df)
