@@ -58,23 +58,23 @@ with graph_2:
     default=df['nome_do_fundo'].unique()[:5]
   )
 
-filtered_df = df[df['nome_do_fundo'].isin(selected_funds)]
+  filtered_df = df[df['nome_do_fundo'].isin(selected_funds)]
 
-if not filtered_df.empty:
-    # Group by 'nome_do_fundo' and sum 'VL_QUOTA'
-    grouped_df = filtered_df.groupby('nome_do_fundo', as_index=False)['VL_QUOTA'].sum()
+  if not filtered_df.empty:
+      # Group by 'nome_do_fundo' and sum 'VL_QUOTA'
+      grouped_df = filtered_df.groupby('nome_do_fundo', as_index=False)['VL_QUOTA'].sum()
 
-    # Create a bar graph using Plotly Express
-    fig = px.bar(
-        grouped_df,
-        x='nome_do_fundo',
-        y='VL_QUOTA',
-        title="Total VL_QUOTA por fundo",
-        labels={"nome_do_fundo": "Nome Fundo", "VL_QUOTA": "Total Quota"}
-    )
+      # Create a bar graph using Plotly Express
+      fig = px.bar(
+          grouped_df,
+          x='nome_do_fundo',
+          y='VL_QUOTA',
+          title="Total VL_QUOTA por fundo",
+          labels={"nome_do_fundo": "Nome Fundo", "VL_QUOTA": "Total Quota"}
+      )
 
-    # Display the bar graph
-    st.plotly_chart(fig)
+      # Display the bar graph
+      st.plotly_chart(fig)
 
-else:
-  st.warning("Selecione um fundo")
+  else:
+    st.warning("Selecione um fundo")
