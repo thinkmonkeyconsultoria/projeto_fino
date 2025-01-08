@@ -1,9 +1,9 @@
 [theme]
-primaryColor = "#4502ba"
-backgroundColor = "#7E8DA6"
-secondaryBackgroundColor = "#5986b3"
-textColor = "#000000"
-font = "sans serif"
+primaryColor = "#FFB703"  
+backgroundColor = "#647795"  
+secondaryBackgroundColor = "#A9BCD0"
+textColor = "#FFFFFF"
+font = "Roboto"
 
 [runner]
 magicEnabled = false
